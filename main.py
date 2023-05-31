@@ -162,7 +162,7 @@ cap = cv2.VideoCapture(0)
 
 valid_image_count = 0
 current_type = -1
-
+counter = 1
 while True:
     ret, img = cap.read()
 
@@ -216,5 +216,22 @@ while True:
         valid_image_count = 0
 
     if valid_image_count > 30:
-        print("Current type: " + class_names[current_type])
-        send.send_data(int(current_type))
+        print("Current type: " + class_names[current_type] + ' Counter:' , counter)
+        if current_type < 2:
+            counter += 1
+        else:
+            counter = 1
+
+    # if counter > 500:
+    #     counter = 1
+    #     send.send_data(int(1))
+    #     send.send_data(int(1))
+    #     send.send_data(int(1))
+    #     send.send_data(int(1))
+    #     send.send_data(int(1))
+    #     print("Send 1-----------------------------------")
+
+    if counter % 150 == 0:
+        send.send_data(int(0))
+        print("Send 0------------------------------------")
+
